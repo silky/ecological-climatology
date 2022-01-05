@@ -43,23 +43,23 @@ plancksLaw wavelength temperature = redim $ a |/| b
 -}
 q1_a = map (s . f) wavelengths
   where
-    f           = flip plancksLaw temp
-    -- wavelengths = [ longwave1, longwave2 ]
-    wavelengths' = [ 4 .. 50 ]
-    -- wavelengths' = [ l * 1/10 | l <- [1 .. 10] ]
+    f w = plancksLaw (w % micro Meter) temp
+    wavelengths = [ 4 .. 50 ]
+    -- wavelengths = [ l * 1/10 | l <- [1 .. 10] ]
     --                 ++ [ 2 .. 10 ]
     --                 ++ [ l * 10 | l <- [2 .. 10] ]
-    wavelengths  = map (\x -> x % micro Meter) wavelengths'
 
-    s x         = redim x # (Watt :/ (Meter :^ sTwo) :/ micro Meter)
-    -- s x         = redim x # (Watt :/ (Meter :^ sThree))
-    longwave1   =  4 % micro Meter
-    longwave2   = 30 % micro Meter
-    temp        = c⁰ 6
-    -- temp        = c⁰ 18
+    -- Note: Maybe it's better to use these units instead of m^-3,
+    -- as it gives numbers that are a bit more readily consumed.
+    s x  = redim x # (Watt :/ (Meter :^ sTwo) :/ micro Meter)
+    -- temp = c⁰ 6
+    temp = c⁰ 18
 
+-- Notes:
+--
+--    > Google says "longwave" radiation is 4-30 μm.
 
--- a) 0.9 W to 3 W per m^-2 μm^-1 ?
+-- a) Answer: ...
 
 
 
