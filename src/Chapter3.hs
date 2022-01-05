@@ -1,7 +1,16 @@
 module Chapter3 where
 
 import Data.Metrology
-import Data.Dimensions.SI
+import Data.Metrology.SI
+
+-- Note: Sad hack. See: <https://github.com/goldfirere/units/issues/39>
+fromCelsius :: Double -> Temperature
+fromCelsius x = (x + 273.15) % Kelvin
+
+(c⁰) = fromCelsius
+
+toCelsius :: Temperature -> Double
+toCelsius k = (k # Kelvin) - 273.15
 
 
 {-
@@ -10,11 +19,14 @@ import Data.Dimensions.SI
   On a winter night, a person sits next to a window with an effective
   temperature of 6⁰C.
 
-  - How much longwave radiation does the window emit?
+  a) How much longwave radiation does the window emit?
   
   With a closed curtain the effective temperature is 18⁰C.
 
-  - How much longwave radiation is emitted? Assume an emisivity of one.
-  - Discuss why the person feels warmer with the curtain closed.
+  b) How much longwave radiation is emitted? Assume an emisivity of one.
+  c) Discuss why the person feels warmer with the curtain closed.
 -}
-q1 = undefined
+q1_a = undefined
+  where
+    temp        = c⁰ 6
+    curtainTemp = c⁰ 18
