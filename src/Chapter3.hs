@@ -36,8 +36,6 @@ plancksLaw wavelength temperature = redim $ a |/| b
 
   a) How much longwave radiation does the window emit?
 
-  A: 0.9 to 3     Watts  m^-2 * μm^-1
-
   With a closed curtain the effective temperature is 18⁰C.
 
   b) How much longwave radiation is emitted? Assume an emisivity of one.
@@ -46,16 +44,30 @@ plancksLaw wavelength temperature = redim $ a |/| b
 q1_a = map (s . f) wavelengths
   where
     f           = flip plancksLaw temp
-    wavelengths = [ longwave1, longwave2 ]
+    -- wavelengths = [ longwave1, longwave2 ]
+    wavelengths' = [ 4 .. 50 ]
     -- wavelengths' = [ l * 1/10 | l <- [1 .. 10] ]
     --                 ++ [ 2 .. 10 ]
     --                 ++ [ l * 10 | l <- [2 .. 10] ]
-    -- wavelengths  = map (\x -> x % micro Meter) wavelengths'
+    wavelengths  = map (\x -> x % micro Meter) wavelengths'
 
     s x         = redim x # (Watt :/ (Meter :^ sTwo) :/ micro Meter)
-    longwave1   = 4 % micro Meter
+    -- s x         = redim x # (Watt :/ (Meter :^ sThree))
+    longwave1   =  4 % micro Meter
     longwave2   = 30 % micro Meter
     temp        = c⁰ 6
+    -- temp        = c⁰ 18
+
+
+-- a) 0.9 W to 3 W per m^-2 μm^-1 ?
+
+
+
+
+
+
+
+
 
 
 -- Notes:
