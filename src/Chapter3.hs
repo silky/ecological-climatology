@@ -1,100 +1,34 @@
-{-# language FlexibleContexts    #-}
-{-# language DataKinds           #-}
-{-# language AllowAmbiguousTypes #-}
+{-# language FlexibleContexts #-}
+{-# language DataKinds        #-}
+{-# language TypeOperators    #-}
 
 module Chapter3 where
 
-{-
-
-Using `units`
+import Types
+import Constants
 
 import Data.Metrology
 import Data.Metrology.SI
--- import Data.Metrology.SI.Poly
 
--- Note: Sad hack. See: <https://github.com/goldfirere/units/issues/39>
-fromCelsius :: Double -> Temperature
-fromCelsius x = (x + 273.15) % Kelvin
-
-(c⁰) = fromCelsius
-
-toCelsius :: Temperature -> Double
-toCelsius k = (k # Kelvin) - 273.15
-
-type U unit a = MkQu_ULN unit DefaultLCSU a
-
--- ~~ Constants
-planckConstant :: Floating a => U (Joule :* Second) a
-planckConstant = (6.6260695729e-34) % (Joule :* Second)
-
-speedOfLight :: Floating a => U (Meter :/ Second) a
-speedOfLight = 3e8 % (Meter :/ Second)
-
-boltzmannConstant :: Floating a => U (Joule :/ Kelvin) a
-boltzmannConstant = (1.38e-23) % (Joule :/ Kelvin)
-
--- TODO: Why can't `Meter` be `Length`?
--- maxEmission :: Temperature -> U Meter Double
-maxEmission :: Temperature -> U Meter Double
-maxEmission temperature = redim (x |/| temperature)
+-- | See: <https://en.wikipedia.org/wiki/Planck%27s_law>
+plancksLaw :: Length
+           -> Temperature
+           -> U' (Watt :/ (Meter :^ Three))
+plancksLaw wavelength temperature = redim $ a |/| b
   where
-    x = 2897.0 % (micro Meter :* Kelvin)
+    a :: U' (Joule :* (Meter :^ Two) :/ Second)
+    a = tau |*| planckConstant |*| (speedOfLight |^ sTwo)
+
+    t :: U' Number
+    t = (planckConstant |*| speedOfLight)
+          |/| (wavelength |*| boltzmannConstant |*| temperature)
+
+    b :: U' (Meter :^ Five)
+    b = (wavelength |^ sFive) |*| (exp t - 1)
 
 
--- wavelength = Λ
--- plancksLaw ::
--- plancksLaw :: Meter -> Temperature -> U (Eener
--- plancksLaw wavelength temperature = a |/| b
---   where
---     -- a = 2 |* pi |* planckConstant |*|
---     a = 2 *| pi *| planckConstant |*| (speedOfLight |^ sTwo)
---     t = (planckConstant |*| speedOfLight) |/| (wavelength |*| boltzmannConstant |*| temperature)
---     b = 1
-    -- w = wavelength :^ 5
-    -- t = planckConstant |* speedOfLight :/ (boltzmannConstant :* wavelength :* temperature)
-    -- b = undefined
-    -- b = w * exp\\\
-
--}
-
-import Prelude hiding ((*), (/), (^), exp, pi)
-import Numeric.Units.Dimensional.Prelude
-
-type AngularMomentum' = AngularMomentum Double
-type Velocity'        = Velocity Double
-type HeatCapacity'    = HeatCapacity Double
-type Celsius'         = CelsiusTemperature Double
-type Length'          = Length Double
-
-planckConstant :: AngularMomentum'
-planckConstant = 6.62e-34 *~ (joule * second)
-
-speedOfLight :: Velocity'
-speedOfLight = 3e8 *~ (meter / second)
-
-boltzmannConstant :: HeatCapacity'
-boltzmannConstant = 1.38e-23 *~ (joule / kelvin)
-
-maxEmission :: Celsius' -> Length'
-maxEmission temperature = x / temperature
-  where
-    x = 2897.0 *~ (micro meter * kelvin)
-
--- plancksLaw :: Length' -> Celsius' -> _
-plancksLaw = a / b
-  where
-    -- wavelength :: Length'
-    wavelength = 1 *~ micro meter
-    -- temperature :: Length'
-    temperature = 1 *~ kelvin
-    a = 2 * pi * planckConstant * (speedOfLight ^ pos2)
-    t = (planckConstant * speedOfLight) / (wavelength * boltzmannConstant * temperature)
-    b = (wavelength ^ pos5) * exp t
-    -- b = (wavelength ^ pos5)
-    -- b = exp t
-    -- b = exp _1
-    -- b = 1
-
+x = plancksLaw (1 % micro Meter) (c⁰ 6)
+y = x # (Watt :/ (Meter :^ sThree))
 
 
 {-
@@ -111,6 +45,21 @@ plancksLaw = a / b
   c) Discuss why the person feels warmer with the curtain closed.
 -}
 q1_a = undefined
-  -- where
-  --   temp        = c⁰ 6
-  --   curtainTemp = c⁰ 18
+  where
+    temp        = c⁰ 6
+    curtainTemp = c⁰ 18
+
+
+-- Notes:
+-- 1. Bug; it doesn't associate well.
+--
+-- Bad:
+--  a = 2 *| pi *| planckConstant |*| (speedOfLight |^ sTwo)
+--
+-- Good:
+--  a = 2 *| (pi *| (planckConstant |*| (speedOfLight |^ sTwo)))
+
+-- 2. Bug; Steradians in units causing an issue.
+--
+--  Bad:  plancksLaw :: U' (Watt :/ (Meter :^ Three) :/ Steradian)
+--  Good: plancksLaw :: U' (Watt :/ (Meter :^ Three))
