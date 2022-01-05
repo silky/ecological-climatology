@@ -1,6 +1,7 @@
 {-# language FlexibleContexts #-}
 {-# language DataKinds        #-}
 {-# language TypeOperators    #-}
+{-# language GADTs    #-}
 
 module Chapter3 where
 
@@ -17,7 +18,7 @@ plancksLaw :: Length
 plancksLaw wavelength temperature = redim $ a |/| b
   where
     a :: U' (Joule :* (Meter :^ Two) :/ Second)
-    a = tau |*| planckConstant |*| (speedOfLight |^ sTwo)
+    a = tau |*| (planckConstant |*| (speedOfLight |^ sTwo))
 
     t :: U' Number
     t = (planckConstant |*| speedOfLight)
@@ -25,10 +26,6 @@ plancksLaw wavelength temperature = redim $ a |/| b
 
     b :: U' (Meter :^ Five)
     b = (wavelength |^ sFive) |*| (exp t - 1)
-
-
-x = plancksLaw (1 % micro Meter) (c⁰ 6)
-y = x # (Watt :/ (Meter :^ sThree))
 
 
 {-
@@ -39,15 +36,26 @@ y = x # (Watt :/ (Meter :^ sThree))
 
   a) How much longwave radiation does the window emit?
 
+  A: 0.9 to 3     Watts  m^-2 * μm^-1
+
   With a closed curtain the effective temperature is 18⁰C.
 
   b) How much longwave radiation is emitted? Assume an emisivity of one.
   c) Discuss why the person feels warmer with the curtain closed.
 -}
-q1_a = undefined
+q1_a = map (s . f) wavelengths
   where
+    f           = flip plancksLaw temp
+    wavelengths = [ longwave1, longwave2 ]
+    -- wavelengths' = [ l * 1/10 | l <- [1 .. 10] ]
+    --                 ++ [ 2 .. 10 ]
+    --                 ++ [ l * 10 | l <- [2 .. 10] ]
+    -- wavelengths  = map (\x -> x % micro Meter) wavelengths'
+
+    s x         = redim x # (Watt :/ (Meter :^ sTwo) :/ micro Meter)
+    longwave1   = 4 % micro Meter
+    longwave2   = 30 % micro Meter
     temp        = c⁰ 6
-    curtainTemp = c⁰ 18
 
 
 -- Notes:

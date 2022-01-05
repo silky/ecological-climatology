@@ -3,6 +3,7 @@ module Types where
 import Data.Metrology
 import Data.Metrology.SI
 
+-- | Handy representations of types.
 type U unit a = MkQu_ULN unit DefaultLCSU a
 type U' unit  = MkQu_ULN unit DefaultLCSU Double
 
@@ -14,4 +15,3 @@ fromCelsius x = (x + 273.15) % Kelvin
 
 toCelsius :: Temperature -> Double
 toCelsius k = (k # Kelvin) - 273.15
-
