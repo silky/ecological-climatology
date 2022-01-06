@@ -13,6 +13,7 @@ import Data.Metrology.SI
 import Data.Text.Chart (plot)
 import System.Console.Ansigraph (graph, animate)
 
+
 -- | Eq. 3.2 - Planks Law.
 --
 -- See also: <https://en.wikipedia.org/wiki/Planck%27s_law>
@@ -38,6 +39,14 @@ peakWavelength temperature =
     l |/| temperature
   where
     l = 2898 % (micro Meter :* Kelvin) 
+
+
+-- | Eq 3.4 - Stefan-Boltzmann law.
+emittance :: Temperature -> U' (Watt :/ Meter :^ Two)
+emittance temperature 
+  = ε |*| stefanBoltzmann |*| (temperature |^ sFour)
+    where
+      ε = 1
 
 
 -- Question 1.
@@ -91,7 +100,8 @@ q1b = q1 $ c⁰ 18
 
 
 
--- Notes:
+-- Notes to follow up on:
+--
 -- 1. Bug; it doesn't associate well.
 --
 -- Bad:
@@ -100,7 +110,7 @@ q1b = q1 $ c⁰ 18
 -- Good:
 --  a = 2 *| (pi *| (planckConstant |*| (speedOfLight |^ sTwo)))
 
--- 2. Bug; Steradians in units causing an issue.
+-- 2. Maybe bug; Steradians in units causing an issue (maybe should be allowed?)
 --
 --  Bad:  plancksLaw :: U' (Watt :/ (Meter :^ Three) :/ Steradian)
 --  Good: plancksLaw :: U' (Watt :/ (Meter :^ Three))

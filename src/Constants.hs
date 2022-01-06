@@ -16,5 +16,9 @@ speedOfLight = 3e8 % (Meter :/ Second)
 boltzmannConstant :: Floating a => U (Joule :/ Kelvin) a
 boltzmannConstant = (1.38e-23) % (Joule :/ Kelvin)
 
+stefanBoltzmann :: Floating a => U (Watt :/ (Meter :^ Two) :/ (Kelvin :^ Four)) a
+stefanBoltzmann =
+  5.67e-8 % (Watt :/ (Meter :^ sTwo) :/ (Kelvin :^ sFour))
+
 tau :: U Number Double
 tau  = constant $ 2 * pi
