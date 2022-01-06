@@ -1,3 +1,6 @@
+{-# language DataKinds     #-}
+{-# language TypeOperators #-}
+
 module Types where
 
 import Data.Metrology

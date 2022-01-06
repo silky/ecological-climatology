@@ -15,7 +15,6 @@ dependencies:
   - base >= 4.7 && < 5
   - units
   - units-defs
-  - dimensional
 
 executables:
   eco:

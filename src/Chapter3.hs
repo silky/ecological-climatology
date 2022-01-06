@@ -1,7 +1,7 @@
 {-# language FlexibleContexts #-}
 {-# language DataKinds        #-}
 {-# language TypeOperators    #-}
-{-# language GADTs    #-}
+{-# language GADTs            #-}
 
 module Chapter3 where
 

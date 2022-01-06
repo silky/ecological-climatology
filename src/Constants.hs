@@ -1,3 +1,6 @@
+{-# language DataKinds     #-}
+{-# language TypeOperators #-}
+
 module Constants where
 
 import Types
