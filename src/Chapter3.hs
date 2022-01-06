@@ -13,10 +13,9 @@ import Data.Metrology.SI
 import Data.Text.Chart (plot)
 import System.Console.Ansigraph (graph, animate)
 
--- | See: <https://en.wikipedia.org/wiki/Planck%27s_law>
+-- | Eq. 3.2 - Planks Law.
 --
--- Eq. 3.1 in the book.
---
+-- See also: <https://en.wikipedia.org/wiki/Planck%27s_law>
 plancksLaw :: Length
            -> Temperature
            -> U' (Watt :/ (Meter :^ Three))
@@ -33,22 +32,28 @@ plancksLaw wavelength temperature = redim $ a |/| b
     b = (wavelength |^ sFive) |*| (exp t - 1)
 
 
-{-
-  Question 1.
+-- | Eq 3.3 - Wien's displacement law.
+peakWavelength :: Temperature -> Length
+peakWavelength temperature = 
+    l |/| temperature
+  where
+    l = 2898 % (micro Meter :* Kelvin) 
 
-  On a winter night, a person sits next to a window with an effective
-  temperature of 6⁰C.
 
-  a) How much longwave radiation does the window emit?
-
-  With a closed curtain the effective temperature is 18⁰C.
-
-  b) How much longwave radiation is emitted?
-
-  Assume an emisivity of one.
-
-  c) Discuss why the person feels warmer with the curtain closed.
--}
+-- Question 1.
+--
+-- On a winter night, a person sits next to a window with an effective
+-- temperature of 6⁰C.
+--
+-- a) How much longwave radiation does the window emit?
+--
+-- With a closed curtain the effective temperature is 18⁰C.
+--
+-- b) How much longwave radiation is emitted?
+--
+-- Assume an emisivity of one.
+--
+-- c) Discuss why the person feels warmer with the curtain closed.
 q1 temp = map (s . f) wavelengths
   where
     f w = plancksLaw (w % micro Meter) temp
