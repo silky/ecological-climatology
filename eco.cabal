@@ -28,7 +28,9 @@ executable eco
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      ansigraph
+    , asciichart
+    , base >=4.7 && <5
     , units
     , units-defs
   default-language: Haskell2010

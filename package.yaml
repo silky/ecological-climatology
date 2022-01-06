@@ -15,6 +15,8 @@ dependencies:
   - base >= 4.7 && < 5
   - units
   - units-defs
+  - asciichart
+  - ansigraph
 
 executables:
   eco:

@@ -10,8 +10,13 @@ import Constants
 
 import Data.Metrology
 import Data.Metrology.SI
+import Data.Text.Chart (plot)
+import System.Console.Ansigraph (graph, animate)
 
 -- | See: <https://en.wikipedia.org/wiki/Planck%27s_law>
+--
+-- Eq. 3.1 in the book.
+--
 plancksLaw :: Length
            -> Temperature
            -> U' (Watt :/ (Meter :^ Three))
@@ -38,28 +43,30 @@ plancksLaw wavelength temperature = redim $ a |/| b
 
   With a closed curtain the effective temperature is 18⁰C.
 
-  b) How much longwave radiation is emitted? Assume an emisivity of one.
+  b) How much longwave radiation is emitted?
+
+  Assume an emisivity of one.
+
   c) Discuss why the person feels warmer with the curtain closed.
 -}
-q1_a = map (s . f) wavelengths
+q1 temp = map (s . f) wavelengths
   where
     f w = plancksLaw (w % micro Meter) temp
-    wavelengths = [ 4 .. 50 ]
-    -- wavelengths = [ l * 1/10 | l <- [1 .. 10] ]
-    --                 ++ [ 2 .. 10 ]
-    --                 ++ [ l * 10 | l <- [2 .. 10] ]
-
+    wavelengths = [ 3 .. 100 ]
     -- Note: Maybe it's better to use these units instead of m^-3,
     -- as it gives numbers that are a bit more readily consumed.
     s x  = redim x # (Watt :/ (Meter :^ sTwo) :/ micro Meter)
-    -- temp = c⁰ 6
-    temp = c⁰ 18
+
+q1a = q1 $ c⁰ 6
+q1b = q1 $ c⁰ 18
 
 -- Notes:
 --
---    > Google says "longwave" radiation is 4-30 μm.
+--    - The book says long-way radiation is 3-100 μm.
 
 -- a) Answer: ...
+-- b) Answer:
+-- c) Answer: 
 
 
 

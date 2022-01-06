@@ -25,6 +25,20 @@ packages:
       sha256: a08f3f05e8ecb909683c2a5512cd996f0e34d1f684ec37dea41b2bad501b451b
   original:
     hackage: units-defs-2.2.1@sha256:5b28a11b563cb29e1a9f7225df856225f6fde3d25f0a64dfaa7d11aeef264912,2180
+- completed:
+    hackage: asciichart-1.0.2@sha256:59b62adb30078dbf96677c17167d156b093c8a2eb93068e0d3a3bd24b5d14b30,1561
+    pantry-tree:
+      size: 273
+      sha256: 7a552767a6ceef966719e8aa05d2c3dc9957b7b96c1dffc94dce71aa1b853a8f
+  original:
+    hackage: asciichart-1.0.2@sha256:59b62adb30078dbf96677c17167d156b093c8a2eb93068e0d3a3bd24b5d14b30,1561
+- completed:
+    hackage: ansigraph-0.3.0.5@sha256:73a488fd3e2548e19ba1c7d2f5e4c1d2d8287e8b9fa5de7950316e9ddab5f710,3929
+    pantry-tree:
+      size: 966
+      sha256: 6c4fbca5434e13265c111d9c073cbf970b7bbfe8874787173912d38d3c8b7754
+  original:
+    hackage: ansigraph-0.3.0.5@sha256:73a488fd3e2548e19ba1c7d2f5e4c1d2d8287e8b9fa5de7950316e9ddab5f710,3929
 snapshots:
 - completed:
     size: 586110
