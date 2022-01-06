@@ -62,6 +62,15 @@ q1b = q1 $ c⁰ 18
 
 -- Notes:
 --
+--    - To plot:
+--      > plot $ map round q1a
+--      > plot $ map round q1b
+--      
+--      Or
+--
+--      > animate $ take 100 $ cycle [q1a, q1b]
+--
+--
 --    - The book says long-way radiation is 3-100 μm.
 
 -- a) Answer: ...
