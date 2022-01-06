@@ -12,6 +12,6 @@ It uses [stack](https://docs.haskellstack.org/en/stable/README/).
 
 ```
 stack repl
-> :l src/Chapter3a
+> :l src/Chapter3.hs
 > plot $ map round q1a
 ```
