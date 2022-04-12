@@ -1,12 +1,10 @@
 name:                eco
 version:             0.1.0.0
-#synopsis:
-#description:
-homepage:            https://github.com/githubuser/eco#readme
+homepage:            https://github.com/silky/ecological-climatology#readme
 license:             BSD3
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2022 Author name here
+author:              Noon van der Silk
+maintainer:          noonvandersilk@gmail.com
+copyright:           2022 Noon van der Silk
 category:            Web
 extra-source-files:
 - README.md
