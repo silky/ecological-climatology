@@ -35,15 +35,15 @@ plancksLaw wavelength temperature = redim $ a |/| b
 
 -- | Eq 3.3 - Wien's displacement law.
 peakWavelength :: Temperature -> Length
-peakWavelength temperature = 
+peakWavelength temperature =
     l |/| temperature
   where
-    l = 2898 % (micro Meter :* Kelvin) 
+    l = 2898 % (micro Meter :* Kelvin)
 
 
 -- | Eq 3.4 - Stefan-Boltzmann law.
 emittance :: Temperature -> U' (Watt :/ Meter :^ Two)
-emittance temperature 
+emittance temperature
   = ε |*| stefanBoltzmann |*| (temperature |^ sFour)
     where
       ε = 1
@@ -79,7 +79,7 @@ q1b = q1 $ c⁰ 18
 --    - To plot:
 --      > plot $ map round q1a
 --      > plot $ map round q1b
---      
+--
 --      Or
 --
 --      > animate $ take 100 $ cycle [q1a, q1b]
@@ -89,7 +89,7 @@ q1b = q1 $ c⁰ 18
 
 -- a) Answer: ...
 -- b) Answer:
--- c) Answer: 
+-- c) Answer:
 
 
 
